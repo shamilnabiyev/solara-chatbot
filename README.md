@@ -2,6 +2,11 @@
 
 Simple Solara Chatbot using local Ollama
 
+<center>
+    <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
+</center>
+
+
 1. Install dependencies
 
     ```bash
