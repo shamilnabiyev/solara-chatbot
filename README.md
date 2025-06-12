@@ -2,9 +2,9 @@
 
 Simple Solara Chatbot using local Ollama
 
-<center>
+<div align="center">
     <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
-</center>
+</div>
 
 
 1. Install dependencies
