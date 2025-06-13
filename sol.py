@@ -82,7 +82,7 @@ def Page():
                 ):
                     solara.Markdown(item["content"])
                 
-                if item["role"] == "assistant": 
+                if (item["role"] == "assistant") and (not promt_ai.pending): 
                     with solara.Row(): 
                         solara.Button(
                             label="like", 
