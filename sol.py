@@ -22,8 +22,8 @@ ollama_client = OpenAI(
     api_key='ollama', # required, but unused
 )
 
-def store_feedback(reaction, item):
-    print(reaction, item)
+def store_feedback(reaction, user_input, chatbot_answer):
+    print(reaction, user_input, chatbot_answer)
 
 @solara.lab.task
 async def promt_ai(message: str):
@@ -71,7 +71,7 @@ def Page():
         }
     ):
         with solara.lab.ChatBox():
-            for item in messages.value:
+            for i, item in enumerate(messages.value):
                 with solara.lab.ChatMessage(
                     user=item["role"] == "user",
                     avatar=False,
@@ -82,12 +82,15 @@ def Page():
                 ):
                     solara.Markdown(item["content"])
                 
-                if (item["role"] == "assistant") and (not promt_ai.pending): 
+                if (item["role"] == "assistant") and (not promt_ai.pending):
+                    # Get the previous (user) message index
+                    user_message_idx = i - 1
+                    user_message = messages.value[user_message_idx] if user_message_idx >= 0 else None 
                     with solara.Row(): 
                         solara.Button(
                             label="like", 
                             icon_name="mdi-thumb-up",
-                            on_click=partial(store_feedback, "like", item)
+                            on_click=partial(store_feedback, "like", user_message, item)
                         )
                         solara.Button(label="dislike", icon_name="mdi-thumb-down")
                         solara.Button(label="comment", icon_name="mdi-comment-text-outline")
