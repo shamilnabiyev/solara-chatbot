@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-import solara.server.fastapi
+from solara.server.fastapi import app as solara_app
 
 app = FastAPI()
 
@@ -9,4 +9,4 @@ def read_root():
     return {"message": "test"}
 
 
-app.mount("/solara/", app=solara.server.fastapi.app)
+app.mount("/solara/", app=solara_app)
