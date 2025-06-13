@@ -7,13 +7,20 @@ Simple Solara Chatbot using local Ollama
 </div>
 
 
-1. Install dependencies
+Install dependencies
 
     ```bash
     pip install -r requirements
     ```
-2. Run the solara app
+
+Option 1: Run the standalone solara app
 
     ```bash
-    solara run chatbot.py 
+    solara run sol.py 
+    ```
+
+Option 2: Enbedd the solara app into FastAPI app
+
+    ```bash
+    SOLARA_APP=sol.py uvicorn app:app
     ```
