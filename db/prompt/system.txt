@@ -47,5 +47,14 @@ CREATE TABLE IF NOT EXISTS purchase (
 -- customer.customer_id can be joined with purchase.customer_id
 
 ### Response:
-Based on your instructions, here is the SQL query I have generated to answer the question `{question}`:
-```sql
+Based on your instructions, here is the SQL query I have generated to answer the question:
+```sql \n
+SELECT \n
+    id, name \n
+FROM \n
+    mytable \n
+WHERE \n
+    deptartment = 'sales' \n
+    AND available = 'true' \n
+LIMIT 10; \n
+```
