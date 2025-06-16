@@ -1,3 +1,9 @@
 openai==1.86.0
 solara==1.48.0
 fastapi==0.115.12
+qdrant-client==1.14.2
+psycopg-binary==3.2.9
+pandas==2.3.0
+plotly==6.1.2
+python-dotenv==1.1.0
+Faker==37.4.0
