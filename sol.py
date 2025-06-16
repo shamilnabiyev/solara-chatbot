@@ -1,14 +1,21 @@
+import os
 import solara
 import solara.lab
-
+import asyncio
 from typing import cast
 from typing import List
 from copy import deepcopy
 from openai import OpenAI
 from functools import partial
+from dotenv import load_dotenv
 from openai.types.chat import ChatCompletionMessageParam
 from typing_extensions import TypedDict
 
+from openai import AzureOpenAI
+from azure.identity import DefaultAzureCredential
+from azure.identity import get_bearer_token_provider
+
+load_dotenv('.env.dev', override=True)
 
 class MessageDict(TypedDict):
     role: str  # "user" or "assistant"
@@ -26,10 +33,17 @@ messages: solara.Reactive[List[MessageDict]] = solara.reactive([
     {"role": "system", "content": SYSTEM_PROMPT}
 ])
 
+token_provider = get_bearer_token_provider(
+    DefaultAzureCredential(), 
+    "https://cognitiveservices.azure.com/.default"
+)
 
-ollama_client = OpenAI(
-    base_url = 'http://localhost:11434/v1',
-    api_key='ollama', # required, but unused
+AZURE_OPENAI_MODEL_DEPLOYMENT = os.getenv("AZURE_OPENAI_MODEL_DEPLOYMENT")
+
+openai_client = AzureOpenAI(
+    api_version=os.getenv("AZURE_OPENAI_API_VERSION"),
+    azure_endpoint=os.getenv("AZURE_OPENAI_ENDPOINT"),
+    azure_ad_token_provider=token_provider
 )
 
 def store_feedback(reaction, user_input, chatbot_answer):
@@ -42,12 +56,15 @@ def contains_sql(text):
         {"role": "user", "content": f"<input>{text}</input>"},
     ]
 
-    response = ollama_client.chat.completions.create(
-        model="llama3.2:3b",
-        messages=cast(List[ChatCompletionMessageParam], turn_message),
+    response = openai_client.chat.completions.create(
+        messages=turn_message,
+        max_tokens=2,
+        temperature=0.0,
+        top_p=1.0,
+        model=AZURE_OPENAI_MODEL_DEPLOYMENT,
         stream=False,
+        stop=["\n"],
     )
-
     result = response.choices[0].message.content.strip().lower()
     return result == "true"
 
@@ -77,15 +94,22 @@ async def promt_ai(message: str):
     else:
         turn_messages = deepcopy([messages.value[0], *messages.value[-(CONTEXT_LENGTH-1):]])
     
-    response = ollama_client.chat.completions.create(
-        model="llama3.2:3b", # "sqlcoder:latest",
-        messages=cast(List[ChatCompletionMessageParam], turn_messages),
+    response = openai_client.chat.completions.create(
+        messages=turn_messages,
+        max_tokens=256,
+        temperature=0.75,
+        top_p=1.0,
+        model=AZURE_OPENAI_MODEL_DEPLOYMENT,
         stream=True,
+        stop=[";"],
     )
 
     messages.value = [*messages.value, create_system_message()]
 
     for chunk in response:
+        if (not chunk.choices) or (len(chunk.choices) == 0):
+            continue
+        
         if chunk.choices[0].finish_reason == "stop":
             messages.value[-1]['is_end_of_stream'] = True
             break
