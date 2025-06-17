@@ -21,9 +21,9 @@ solara run sol.py
 
 The app will be available at `http://localhost:8765`
 
-Option 2: Enbedd the solara app into FastAPI app
+Option 2: Embedd the solara app into FastAPI app
 
 ```bash
-SOLARA_APP=sol.py uvicorn app:app
+SOLARA_APP=gui/sol.py uvicorn app:app
 ```
 The app will be available at `http://localhost:8000/solara/`
