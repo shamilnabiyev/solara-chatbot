@@ -1,6 +1,6 @@
-# Solara Chatbot 
+# Solara SQL Chatbot 
 
-Solara Chatbot App using Azure OpenAI models
+Solara SQL Chatbot App using Azure OpenAI models
 
 <div align="center">
     <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
