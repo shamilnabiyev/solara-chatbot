@@ -10,7 +10,7 @@ from qdrant_client.models import (
     Distance
 )
 
-load_dotenv('.env.dev', override=True)
+load_dotenv('.env', override=True)
 
 QDRANT_API_KEY=os.getenv('QDRANT__SERVICE__API_KEY')
 

@@ -7,3 +7,4 @@ pandas==2.3.0
 plotly==6.1.2
 python-dotenv==1.1.0
 Faker==37.4.0
+azure-identity==1.23.0

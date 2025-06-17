@@ -14,7 +14,7 @@
                 "--reload"
             ],
             "env": {
-                "SOLARA_APP": "sol.py"
+                "SOLARA_APP": "gui/sol.py"
             },
             "jinja": true
         }
