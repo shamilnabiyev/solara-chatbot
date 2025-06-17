@@ -6,7 +6,7 @@ import random
 import uuid
 from dotenv import load_dotenv
 
-load_dotenv('.env.dev', override=True)
+load_dotenv('.env', override=True)
 
 # Database connection parameters
 POSTGRES_USER = os.getenv('POSTGRES_USER')

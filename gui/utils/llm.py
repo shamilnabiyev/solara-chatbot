@@ -4,7 +4,7 @@ from openai import AzureOpenAI
 from azure.identity import DefaultAzureCredential
 from azure.identity import get_bearer_token_provider
 
-load_dotenv('.env.dev', override=True)
+load_dotenv('.env', override=True)
 
 AZURE_OPENAI_MODEL_DEPLOYMENT = os.getenv("AZURE_OPENAI_MODEL_DEPLOYMENT")
 
