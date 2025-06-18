@@ -4,6 +4,7 @@ from typing import List
 from copy import deepcopy
 from functools import partial
 from typing_extensions import TypedDict
+from utils.vanna_client import vn
 from utils.llm import (
     find_sql, 
     generate_sql, 
@@ -36,10 +37,10 @@ def store_feedback(reaction, user_input, chatbot_answer):
     print(reaction, user_input, chatbot_answer)
 
 
-def create_system_message():
+def create_system_message(content=""):
     return {
         "role": "assistant", 
-        "content": "", 
+        "content": content, 
         "is_end_of_stream": False, 
         "is_sql_statement": False
     }
@@ -90,6 +91,33 @@ async def promt_ai(message: str):
     
     return
 
+@solara.lab.task
+async def prompt_vanna(message: str):
+    messages.value = [
+        *messages.value,
+        {"role": "user", "content": message},
+    ]
+
+    sql_query, sql_query_result, sql_query_plot = vn.ask(
+        question=message,
+        visualize=False,
+        print_results=False
+    )
+
+    if sql_query_result is None:
+        result_message = sql_query
+    else:
+        result_message = f"""```sql\n 
+        {sql_query} ```
+        """
+
+    messages.value = [*messages.value, create_system_message(result_message)]
+    messages.value[-1]['is_end_of_stream'] = True
+
+    if find_sql(result_message) == True:
+        messages.value[-1]['is_sql_statement'] = True
+
+    return
 
 @solara.component
 def Page():
@@ -146,16 +174,16 @@ def Page():
                                 ) 
         
         # Show progress bar while generation an answer
-        if promt_ai.pending:
+        if prompt_vanna.pending:
             solara.Text("...", style={"font-size": "1rem", "padding-left": "20px"})
             solara.ProgressLinear()
         
         # if we don't call .key(..) with a unique key, the ChatInput component will 
         # be re-created and we'll lose what we typed.
         solara.lab.ChatInput(
-            send_callback=promt_ai, 
-            disabled=promt_ai.pending, 
-            disabled_input=promt_ai.pending, 
-            disabled_send=promt_ai.pending, 
+            send_callback=prompt_vanna, 
+            disabled=prompt_vanna.pending, 
+            disabled_input=prompt_vanna.pending, 
+            disabled_send=prompt_vanna.pending, 
             autofocus=True
         ).key("input")

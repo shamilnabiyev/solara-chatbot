@@ -18,5 +18,18 @@ services:
       timeout: 5s
       retries: 5
 
+  qdrant:
+    image: qdrant/qdrant:latest
+    restart: always
+    environment:
+      - QDRANT__SERVICE__API_KEY=qdrant-api-key-readwrite
+      - QDRANT__SERVICE__READ_ONLY_API_KEY=qdrant-api-key-readonly
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
 volumes:
   pgdata:
+  qdrant_data:

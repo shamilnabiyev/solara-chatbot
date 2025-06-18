@@ -7,11 +7,13 @@ Solara SQL Chatbot App using Azure OpenAI models
 </div>
 
 
-Install dependencies
+## Install dependencies
 
 ```bash
 pip install -r requirements
 ```
+
+## Environment variables
 
 Create `.env` file and add the env variables to it:
 
@@ -26,6 +28,21 @@ AZURE_OPENAI_ENDPOINT='azure-openai-endpoint'
 AZURE_OPENAI_API_VERSION='azure-openai-api-version'
 ```
 
+## Start docker images
+
+```bash
+docker-compose up -d
+```
+
+## Run Vanna SQL Agent training
+
+Vanna SQL Agent should be trained only once
+
+```bash
+python db/vanna/vanna_train.py
+```
+
+## Start the app
 
 Option 1: Run the standalone solara app
 
