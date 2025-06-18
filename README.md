@@ -10,22 +10,21 @@ Solara SQL Chatbot App using Azure OpenAI models
 
 - [Install dependencies](#install-dependencies)
 - [Environment variables](#environment-variables)
-- [Start docker images](#start-docker-images)
+- [Start Docker containers](#start-docker-containers)
 - [Run Vanna SQL Agent training](#run-vanna-sql-agent-training)
 - [Start the app](#start-the-app)
     - [Option 1: Run the standalone Solara app](#option-1-run-the-standalone-solara-app)
-    - [Option 2: Embedd the Solara GUI into FastAPI app](#option-2-embedd-the-solara-app-into-fastapi-app)
+    - [Option 2: Embed the Solara GUI into FastAPI app](#option-2-embed-the-solara-app-into-fastapi-app)
 
 ## Install dependencies
 
-Create a new python virtual environemnt (venv)
+Create a new Python virtual environment (venv):
 
 ```bash
 python -m venv .venv
 ```
 
-
-Activate the venv
+Activate the venv:
 
 ```bash
 # On Linux
@@ -42,7 +41,7 @@ source .venv/bin/activate
 source .venv/Scripts/activate
 ```
 
-Install python dependencies
+Install Python dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -50,7 +49,7 @@ pip install -r requirements.txt
 
 ## Environment variables
 
-Create `.env` file and add the env variables to it:
+Create a `.env` file and add the environment variables:
 
 ```ini
 # PostgreSQL
@@ -70,7 +69,7 @@ AZURE_OPENAI_ENDPOINT='openai-endpoint'
 AZURE_OPENAI_API_VERSION='openai-api-version'
 ```
 
-## Start docker images
+## Start Docker containers
 
 ```bash
 docker-compose up -d
@@ -78,7 +77,7 @@ docker-compose up -d
 
 ## Run Vanna SQL Agent training
 
-Vanna SQL Agent should be trained only once
+Vanna SQL Agent should be trained only once:
 
 ```bash
 python db/vanna/vanna_train.py
@@ -86,17 +85,18 @@ python db/vanna/vanna_train.py
 
 ## Start the app
 
-Option 1: Run the standalone Solara app
+Option 1: Run the standalone Solara app:
 
 ```bash
-solara run sol.py 
+solara run sol.py
 ```
 
-The app will be available at `http://localhost:8765`
+The app will be available at `http://localhost:8765`.
 
-Option 2: Embedd the Solara GUI into FastAPI app
+Option 2: Embed the Solara GUI into a FastAPI app:
 
 ```bash
 SOLARA_APP=gui/sol.py uvicorn app:app
 ```
-The app will be available at `http://localhost:8000/solara/`
+
+The app will be available at `http://localhost:8000/solara/`.
