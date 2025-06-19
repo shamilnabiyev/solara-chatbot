@@ -10,7 +10,7 @@ from azure.identity import get_bearer_token_provider
 load_dotenv('.env', override=True)
 
 qdrant_client = QdrantClient(
-    url="http://localhost:6333", 
+    url=os.getenv('QDRANT_API_URL'), 
     api_key=os.getenv('QDRANT__SERVICE__API_KEY')
 )
 
