@@ -4,13 +4,20 @@ This project is a proof-of-concept demonstrating how to create a simple SQL Chat
 
 <div align="center">
     <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
+</div>
+
+<div align="center">
     <span>Fig.1: Solara Chatbot GUI</span>
 </div>
+
 
 <br>
 
 <div align="center">
     <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="500"/>
+</div>
+
+<div align="center">
     <span>Fig.2: Components Diagram</span>
 </div>
 
