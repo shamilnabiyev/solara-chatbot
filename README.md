@@ -1,9 +1,17 @@
 # Solara SQL Chatbot 
 
-Solara SQL Chatbot App using Azure OpenAI models
+This project is a proof-of-concept demonstrating how to create a simple SQL Chatbot using Solara for GUI development, FastAPI as the backend framework, Azure OpenAI API as the language model, Qdrant Vector Database for managing embeddings, PostgreSQL for data storage, and Vanna AI SQL Agent for generating SQL queries from natural language inputs.
 
 <div align="center">
     <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
+    <span>Fig.1: Solara Chatbot GUI</span>
+</div>
+
+<br>
+
+<div align="center">
+    <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="500"/>
+    <span>Fig.2: Components Diagram</span>
 </div>
 
 ## Table of Contents
@@ -11,10 +19,10 @@ Solara SQL Chatbot App using Azure OpenAI models
 - [Install dependencies](#install-dependencies)
 - [Environment variables](#environment-variables)
 - [Start Docker containers](#start-docker-containers)
+- [Create a test database](#create-a-test-database)
 - [Run Vanna SQL Agent training](#run-vanna-sql-agent-training)
-- [Start the app](#start-the-app)
-    - [Option 1: Run the standalone Solara app](#option-1-run-the-standalone-solara-app)
-    - [Option 2: Embed the Solara GUI into FastAPI app](#option-2-embed-the-solara-app-into-fastapi-app)
+- [Start the Solara SQL Chatbot](#start-the-solara-sql-chatbot)
+
 
 ## Install dependencies
 
@@ -75,6 +83,16 @@ AZURE_OPENAI_API_VERSION='openai-api-version'
 docker-compose up -d
 ```
 
+`sales_db` PostgreSQL database will be created
+
+## Create a test database
+
+The python script `db/utils/data_gen.py` will create `customer`and `purchase` tables in `sales_db` database, and finally fill the tables with random data.
+
+```bash
+python db/utils/data_gen.py
+```
+
 ## Run Vanna SQL Agent training
 
 Vanna SQL Agent should be trained only once:
@@ -83,15 +101,15 @@ Vanna SQL Agent should be trained only once:
 python db/vanna/vanna_train.py
 ```
 
-## Start the app
+## Start the Solara SQL Chatbot
 
 Option 1: Run the standalone Solara app:
 
 ```bash
-solara run sol.py
+solara run gui/sol.py
 ```
 
-The app will be available at `http://localhost:8765`.
+The app will be available at `http://localhost:8765`
 
 Option 2: Embed the Solara GUI into a FastAPI app:
 
@@ -99,4 +117,4 @@ Option 2: Embed the Solara GUI into a FastAPI app:
 SOLARA_APP=gui/sol.py uvicorn app:app
 ```
 
-The app will be available at `http://localhost:8000/solara/`.
+The app will be available at `http://localhost:8000/solara/`
