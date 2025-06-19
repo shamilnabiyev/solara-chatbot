@@ -1,5 +1,6 @@
 import solara
 import solara.lab
+import pandas as pd
 from typing import List
 from functools import partial
 from typing_extensions import TypedDict
@@ -22,6 +23,7 @@ COLUMN_STYLE = {
 class MessageDict(TypedDict):
     role: str  # "user" or "assistant"
     content: str
+    dataframe: pd.DataFrame
     is_sql_statement: bool
     is_end_of_stream: bool
 
@@ -35,10 +37,11 @@ def store_feedback(reaction, user_input, chatbot_answer):
     print(reaction, user_input, chatbot_answer)
 
 
-def create_system_message(content=""):
+def create_assistant_message(content="", dataframe=None):
     return {
         "role": "assistant", 
         "content": content, 
+        "dataframe": dataframe,
         "is_end_of_stream": False, 
         "is_sql_statement": False
     }
@@ -59,6 +62,7 @@ async def prompt_vanna(message: str):
 
     if sql_query_result is None:
         result_message = sql_query
+        dataframe=None
     else:
         result_message = (
             "```sql \n"
@@ -66,8 +70,13 @@ async def prompt_vanna(message: str):
             "\n"
             "```"
         )
+        dataframe = sql_query_result
 
-    messages.value = [*messages.value, create_system_message(result_message)]
+    messages.value = [
+        *messages.value, 
+        create_assistant_message(result_message, dataframe)
+    ]
+
     messages.value[-1]['is_end_of_stream'] = True
 
     if find_sql(result_message) == True:
@@ -98,14 +107,14 @@ def render_buttons_row(item, user_message):
                 on_click=partial(store_feedback, "dislike", user_message, item),
             )
 
-        if item.get('is_sql_statement', False):
-            solara.Button(
-                label="run query", 
-                outlined=True,
-                color="primary", 
-                icon_name="mdi-play",
-                on_click=partial(run_query, item.get('content', ''))
-            )
+        # if item.get('is_sql_statement', False):
+        #     solara.Button(
+        #         label="run query", 
+        #         outlined=True,
+        #         color="primary", 
+        #         icon_name="mdi-play",
+        #         on_click=partial(run_query, item.get('content', ''))
+        #     )
 
 
 def render_chat_message(idx, item):
@@ -118,6 +127,10 @@ def render_chat_message(idx, item):
         border_radius="20px",
     ):
         solara.Markdown(item["content"])
+
+        if (item["role"] == "assistant") and (item.get("dataframe", None) is not None):
+            solara.DataFrame(item.get("dataframe"), items_per_page=5)
+            solara.Markdown("")
     
         if (item["role"] == "assistant"):
             # Get the previous (user) message index for using it in feedback
