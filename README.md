@@ -116,18 +116,19 @@ python db/vanna/vanna_train.py
 
 ## Start the Solara SQL Chatbot
 
-Option 1: Run the standalone Solara app:
-
-```bash
-solara run gui/sol.py
-```
-
-The app will be available at `http://localhost:8765`
-
-Option 2: Embed the Solara GUI into a FastAPI app:
+Embed the Solara GUI into a FastAPI app:
 
 ```bash
 SOLARA_APP=gui/sol.py uvicorn app:app
 ```
 
 The app will be available at `http://localhost:8000/solara/`
+
+
+Alternative option: Run the standalone Solara app:
+
+```bash
+solara run gui/sol.py
+```
+
+The app will be available at `http://localhost:8765`
