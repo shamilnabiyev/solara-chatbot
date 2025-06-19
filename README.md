@@ -3,14 +3,21 @@
 This project is a proof-of-concept demonstrating how to create a simple SQL Chatbot using Solara for GUI development, FastAPI as the backend framework, Azure OpenAI API as the language model, Qdrant Vector Database for managing embeddings, PostgreSQL for data storage, and Vanna AI SQL Agent for generating SQL queries from natural language inputs.
 
 <div align="center">
-    <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="500"/>
+    <img src="docs/imgs/chatbot-gui.png" alt="Chatbot GUI" width="600"/>
+</div>
+
+<div align="center">
     <span>Fig.1: Solara Chatbot GUI</span>
 </div>
+
 
 <br>
 
 <div align="center">
-    <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="500"/>
+    <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="600"/>
+</div>
+
+<div align="center">
     <span>Fig.2: Components Diagram</span>
 </div>
 
