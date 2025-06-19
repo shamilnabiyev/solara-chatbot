@@ -80,8 +80,9 @@ POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 
 # Qdrant
-QDRANT__SERVICE__API_KEY=api-key-readwrite
-QDRANT__SERVICE__READ_ONLY_API_KEY=api-key-readonly
+QDRANT_API_URL='http://localhost:6333'
+QDRANT__SERVICE__API_KEY='api-key-readwrite'
+QDRANT__SERVICE__READ_ONLY_API_KEY='api-key-readonly'
 
 # Azure OpenAI
 AZURE_OPENAI_MODEL_DEPLOYMENT='model-deployment-name'
