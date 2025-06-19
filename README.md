@@ -1,5 +1,17 @@
 # Solara SQL Chatbot 
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Install dependencies](#install-dependencies)
+- [Environment variables](#environment-variables)
+- [Start Docker containers](#start-docker-containers)
+- [Create a test database](#create-a-test-database)
+- [Run Vanna SQL Agent training](#run-vanna-sql-agent-training)
+- [Start the Solara SQL Chatbot](#start-the-solara-sql-chatbot)
+
+## Introduction
+
 This project is a proof-of-concept demonstrating how to create a simple SQL Chatbot using Solara for GUI development, FastAPI as the backend framework, Azure OpenAI API as the language model, Qdrant Vector Database for managing embeddings, PostgreSQL for data storage, and Vanna AI SQL Agent for generating SQL queries from natural language inputs.
 
 <div align="center">
@@ -21,14 +33,7 @@ This project is a proof-of-concept demonstrating how to create a simple SQL Chat
     <span>Fig.2: Components Diagram</span>
 </div>
 
-## Table of Contents
 
-- [Install dependencies](#install-dependencies)
-- [Environment variables](#environment-variables)
-- [Start Docker containers](#start-docker-containers)
-- [Create a test database](#create-a-test-database)
-- [Run Vanna SQL Agent training](#run-vanna-sql-agent-training)
-- [Start the Solara SQL Chatbot](#start-the-solara-sql-chatbot)
 
 
 ## Install dependencies
