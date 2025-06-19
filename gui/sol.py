@@ -107,9 +107,12 @@ async def prompt_vanna(message: str):
     if sql_query_result is None:
         result_message = sql_query
     else:
-        result_message = f"""```sql\n 
-        {sql_query} ```
-        """
+        result_message = (
+            "```sql \n"
+            f"{sql_query} "
+            "\n"
+            "```"
+        )
 
     messages.value = [*messages.value, create_system_message(result_message)]
     messages.value[-1]['is_end_of_stream'] = True
