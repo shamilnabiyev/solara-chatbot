@@ -92,7 +92,7 @@ AZURE_OPENAI_API_VERSION='openai-api-version'
 ## Start Docker containers
 
 ```bash
-docker-compose up -d
+docker-compose --env-file .env up -d
 ```
 
 `sales_db` PostgreSQL database will be created
