@@ -92,15 +92,15 @@ AZURE_OPENAI_API_VERSION='openai-api-version'
 
 ## Start Docker containers
 
+Start `postgresql` and `qdrant` containers, and create `sales_db` PostgreSQL database:
+
 ```bash
 docker-compose --env-file .env up -d
 ```
 
-`sales_db` PostgreSQL database will be created
-
 ## Create a test database
 
-The python script `db/utils/data_gen.py` will create `customer`and `purchase` tables in `sales_db` database, and finally fill the tables with random data.
+The python script `utils/data_gen.py` will create `customer`and `purchase` tables in the `sales_db` database, and finally fill the tables with random data.
 
 ```bash
 python utils/data_gen.py
