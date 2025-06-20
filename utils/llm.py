@@ -8,10 +8,7 @@ load_dotenv('.env', override=True)
 
 AZURE_OPENAI_MODEL_DEPLOYMENT = os.getenv("AZURE_OPENAI_MODEL_DEPLOYMENT")
 
-with open("db/prompt/system.txt", "r") as file:
-    SYSTEM_PROMPT = file.read()
-
-with open("db/prompt/sqlcheck.txt", "r") as file:
+with open("utils/prompt/sqlcheck.txt", "r") as file:
     SQL_CHECK_PROMPT = file.read()
 
 token_provider = get_bearer_token_provider(
@@ -55,5 +52,3 @@ def generate_sql(messages):
         stream=True,
     )
 
-def init_messages():
-    return {"role": "system", "content": SYSTEM_PROMPT}

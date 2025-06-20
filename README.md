@@ -19,18 +19,18 @@ This project is a proof-of-concept demonstrating how to create a simple SQL Chat
 </div>
 
 <div align="center">
-    <span>Fig.1: Solara Chatbot GUI</span>
+    <span><i>Fig.1: Solara Chatbot GUI</i></span>
 </div>
 
 
 <br>
 
 <div align="center">
-    <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="500"/>
+    <img src="docs/imgs/components-diagram.png" alt="Chatbot GUI" width="700"/>
 </div>
 
 <div align="center">
-    <span>Fig.2: Components Diagram</span>
+    <span><i>Fig.2: Components Diagram</i></span>
 </div>
 
 
@@ -38,7 +38,7 @@ This project is a proof-of-concept demonstrating how to create a simple SQL Chat
 
 ## Install dependencies
 
-Create a new Python virtual environment (venv):
+Create a new python virtual environment (venv):
 
 ```bash
 python -m venv .venv
@@ -61,7 +61,7 @@ source .venv/bin/activate
 source .venv/Scripts/activate
 ```
 
-Install Python dependencies:
+Install python dependencies:
 
 ```bash
 pip install -r requirements.txt
@@ -73,11 +73,11 @@ Create a `.env` file and add the environment variables:
 
 ```ini
 # PostgreSQL
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
-POSTGRES_DB=sales_db
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5432
+POSTGRES_USER='postgres'
+POSTGRES_PASSWORD='postgres'
+POSTGRES_DB='sales_db'
+POSTGRES_HOST='localhost'
+POSTGRES_PORT='5432'
 
 # Qdrant
 QDRANT_API_URL='http://localhost:6333'
@@ -103,7 +103,7 @@ docker-compose --env-file .env up -d
 The python script `db/utils/data_gen.py` will create `customer`and `purchase` tables in `sales_db` database, and finally fill the tables with random data.
 
 ```bash
-python db/utils/data_gen.py
+python utils/data_gen.py
 ```
 
 ## Run Vanna SQL Agent training
@@ -111,7 +111,7 @@ python db/utils/data_gen.py
 Vanna SQL Agent should be trained only once:
 
 ```bash
-python db/vanna/vanna_train.py
+python utils/vanna_train.py
 ```
 
 ## Start the Solara SQL Chatbot
@@ -123,12 +123,3 @@ SOLARA_APP=gui/sol.py uvicorn app:app
 ```
 
 The app will be available at `http://localhost:8000/solara/`
-
-
-Alternative option: Run the standalone Solara app:
-
-```bash
-solara run gui/sol.py
-```
-
-The app will be available at `http://localhost:8765`
