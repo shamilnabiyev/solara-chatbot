@@ -5,20 +5,7 @@ from typing import List
 from functools import partial
 from typing_extensions import TypedDict
 from utils.vanna_client import vn
-from utils.llm import (
-    find_sql, 
-    init_messages
-)
-
-COLUMN_STYLE = {
-    "width": "100%",
-    "height": "95%",
-    "border": "1px solid #e0e0e0",           
-    "borderRadius": "12px",                   
-    "boxShadow": "0 4px 16px rgba(0,0,0,0.07)", 
-    "padding": "24px",               
-    "backgroundColor": "#fff",                
-}
+from utils.llm import find_sql
 
 class MessageDict(TypedDict):
     role: str  # "user" or "assistant"
@@ -28,9 +15,7 @@ class MessageDict(TypedDict):
     is_end_of_stream: bool
 
 
-messages: solara.Reactive[List[MessageDict]] = solara.reactive([
-    init_messages()
-])
+messages: solara.Reactive[List[MessageDict]] = solara.reactive([])
 
 
 def store_feedback(reaction, user_input, chatbot_answer):
@@ -84,8 +69,10 @@ async def prompt_vanna(message: str):
 
     return
 
+
 def run_query(text):
     pass
+
 
 def render_buttons_row(item, user_message):
     with solara.Row(
@@ -154,7 +141,7 @@ def render_progress_bar():
     solara.ProgressLinear()
 
 
-def render_chatinput():
+def render_chat_input():
     solara.lab.ChatInput(
         send_callback=prompt_vanna, 
         disabled=prompt_vanna.pending, 
@@ -167,7 +154,15 @@ def render_chatinput():
 @solara.component
 def Page():
     with solara.Column(
-        style=COLUMN_STYLE
+        style={
+            "width": "100%",
+            "height": "95%",
+            "border": "1px solid #e0e0e0",           
+            "borderRadius": "12px",                   
+            "boxShadow": "0 4px 16px rgba(0,0,0,0.07)", 
+            "padding": "24px",               
+            "backgroundColor": "#fff",                
+        }
     ):
         solara.Title("Solara SQL Chatbot")
         
@@ -178,6 +173,4 @@ def Page():
         if prompt_vanna.pending:
             render_progress_bar()
         
-        # if we don't call .key(..) with a unique key, the ChatInput component will 
-        # be re-created and we'll lose what we typed.
-        render_chatinput()
+        render_chat_input()
