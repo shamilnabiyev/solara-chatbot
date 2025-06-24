@@ -27,6 +27,15 @@ PRODUCTS = [
 fake = Faker()
 
 def create_database_if_not_exists():
+    """
+    Checks if the target PostgreSQL database exists; creates it if not.
+
+    Connects to the default 'postgres' database with autocommit enabled.
+    Executes a query to verify the existence of the database specified by
+    'POSTGRES_DB'. If it does not exist, creates the database.
+
+    Uses psycopg for database connection and executes SQL commands.
+    """
     with psycopg.connect(
         dbname="postgres",
         user=POSTGRES_USER,
@@ -44,6 +53,12 @@ def create_database_if_not_exists():
                 print(f"Database '{POSTGRES_DB}' already exists.")
 
 def create_tables():
+    """
+    Creates the 'customer' and 'purchase' tables in the database if they do not already exist.
+
+    Uses SQL CREATE TABLE IF NOT EXISTS statements to define the schema for each table.
+    Establishes a database connection and executes the creation commands within a transaction context.
+    """
     create_customer_table = """
     CREATE TABLE IF NOT EXISTS customer (
         customer_id VARCHAR(100) PRIMARY KEY,
@@ -121,6 +136,21 @@ def insert_customers(customers):
     return ids
 
 def generate_purchases(customer_ids, n):
+    """
+    Generate a list of purchase records for synthetic data population.
+
+    Parameters
+    ----------
+    customer_ids : list of str
+        List of customer IDs to associate each purchase with a customer.
+    n : int
+        Number of purchase records to generate.
+
+    Returns
+    -------
+    list of dict
+        A list containing dictionaries, each representing a purchase record
+    """
     purchases = []
     for _ in range(n):
         customer_id = random.choice(customer_ids)
@@ -141,6 +171,18 @@ def generate_purchases(customer_ids, n):
     return purchases
 
 def insert_purchases(purchases):
+    """
+    Insert purchase records into the 'purchase' table.
+
+    Parameters
+    ----------
+    purchases : list of dict
+        A list of dictionaries, each representing a purchase record
+
+    Returns
+    -------
+    None
+    """
     with psycopg.connect(
         dbname=POSTGRES_DB,
         user=POSTGRES_USER,

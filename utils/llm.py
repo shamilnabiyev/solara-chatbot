@@ -24,6 +24,19 @@ openai_client = AzureOpenAI(
 
 
 def find_sql(text):
+    """
+    Check if the input text contains a valid SQL query.
+
+    Parameters
+    ----------
+    text : str
+        The input text to check for SQL content.
+
+    Returns
+    -------
+    bool
+        True if the response indicates presence of SQL, False otherwise.
+    """
     turn_message = [
         {"role": "system", "content": SQL_CHECK_PROMPT},
         {"role": "user", "content": f"<input>{text}</input>"},
@@ -43,6 +56,19 @@ def find_sql(text):
 
 
 def generate_sql(messages):
+    """
+    Generate an SQL query based on input messages using the Azure OpenAI client.
+
+    Parameters
+    ----------
+    messages : list
+        A list of message dictionaries to provide context for the prompt.
+
+    Returns
+    -------
+    openai.ChatCompletion.stream
+        An iterable stream of the chat completion responses.
+    """
     return openai_client.chat.completions.create(
         messages=messages,
         max_tokens=256,
